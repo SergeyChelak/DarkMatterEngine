@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "79E72CAE-093E-4E35-AE67-14A6B89F0305",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:DarkMatterECS.xcodeproj",
+        "identifier" : "A5A525FC2EB29AD7000C2FAA",
+        "name" : "DarkMatterECSTests"
+      }
+    }
+  ],
+  "version" : 1
+}
