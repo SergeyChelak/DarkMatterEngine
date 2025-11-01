@@ -1,0 +1,600 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A54FF3C42EB5314300577DFD /* DarkMatterStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A54FF3C32EB5314300577DFD /* DarkMatterStorage */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A5081F622EB52AFE000B2A63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5081F4C2EB52AFD000B2A63 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5081F532EB52AFD000B2A63;
+			remoteInfo = DarkMatter;
+		};
+		A5081F6C2EB52AFE000B2A63 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5081F4C2EB52AFD000B2A63 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5081F532EB52AFD000B2A63;
+			remoteInfo = DarkMatter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A5081F542EB52AFD000B2A63 /* DarkMatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarkMatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5081F612EB52AFE000B2A63 /* DarkMatterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DarkMatterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5081F6B2EB52AFE000B2A63 /* DarkMatterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DarkMatterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A5081F562EB52AFD000B2A63 /* DarkMatter */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DarkMatter;
+			sourceTree = "<group>";
+		};
+		A5081F642EB52AFE000B2A63 /* DarkMatterTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DarkMatterTests;
+			sourceTree = "<group>";
+		};
+		A5081F6E2EB52AFE000B2A63 /* DarkMatterUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DarkMatterUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5081F512EB52AFD000B2A63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A54FF3C42EB5314300577DFD /* DarkMatterStorage in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F5E2EB52AFE000B2A63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F682EB52AFE000B2A63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5081F4B2EB52AFD000B2A63 = {
+			isa = PBXGroup;
+			children = (
+				A5081F562EB52AFD000B2A63 /* DarkMatter */,
+				A5081F642EB52AFE000B2A63 /* DarkMatterTests */,
+				A5081F6E2EB52AFE000B2A63 /* DarkMatterUITests */,
+				A54FF3C22EB5314300577DFD /* Frameworks */,
+				A5081F552EB52AFD000B2A63 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5081F552EB52AFD000B2A63 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5081F542EB52AFD000B2A63 /* DarkMatter.app */,
+				A5081F612EB52AFE000B2A63 /* DarkMatterTests.xctest */,
+				A5081F6B2EB52AFE000B2A63 /* DarkMatterUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A54FF3C22EB5314300577DFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5081F532EB52AFD000B2A63 /* DarkMatter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5081F752EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatter" */;
+			buildPhases = (
+				A5081F502EB52AFD000B2A63 /* Sources */,
+				A5081F512EB52AFD000B2A63 /* Frameworks */,
+				A5081F522EB52AFD000B2A63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A5081F562EB52AFD000B2A63 /* DarkMatter */,
+			);
+			name = DarkMatter;
+			packageProductDependencies = (
+				A54FF3C32EB5314300577DFD /* DarkMatterStorage */,
+			);
+			productName = DarkMatter;
+			productReference = A5081F542EB52AFD000B2A63 /* DarkMatter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A5081F602EB52AFE000B2A63 /* DarkMatterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5081F782EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatterTests" */;
+			buildPhases = (
+				A5081F5D2EB52AFE000B2A63 /* Sources */,
+				A5081F5E2EB52AFE000B2A63 /* Frameworks */,
+				A5081F5F2EB52AFE000B2A63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5081F632EB52AFE000B2A63 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A5081F642EB52AFE000B2A63 /* DarkMatterTests */,
+			);
+			name = DarkMatterTests;
+			packageProductDependencies = (
+			);
+			productName = DarkMatterTests;
+			productReference = A5081F612EB52AFE000B2A63 /* DarkMatterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A5081F6A2EB52AFE000B2A63 /* DarkMatterUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5081F7B2EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatterUITests" */;
+			buildPhases = (
+				A5081F672EB52AFE000B2A63 /* Sources */,
+				A5081F682EB52AFE000B2A63 /* Frameworks */,
+				A5081F692EB52AFE000B2A63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5081F6D2EB52AFE000B2A63 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A5081F6E2EB52AFE000B2A63 /* DarkMatterUITests */,
+			);
+			name = DarkMatterUITests;
+			packageProductDependencies = (
+			);
+			productName = DarkMatterUITests;
+			productReference = A5081F6B2EB52AFE000B2A63 /* DarkMatterUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5081F4C2EB52AFD000B2A63 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A5081F532EB52AFD000B2A63 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					A5081F602EB52AFE000B2A63 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = A5081F532EB52AFD000B2A63;
+					};
+					A5081F6A2EB52AFE000B2A63 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = A5081F532EB52AFD000B2A63;
+					};
+				};
+			};
+			buildConfigurationList = A5081F4F2EB52AFD000B2A63 /* Build configuration list for PBXProject "DarkMatter" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5081F4B2EB52AFD000B2A63;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A5081F552EB52AFD000B2A63 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5081F532EB52AFD000B2A63 /* DarkMatter */,
+				A5081F602EB52AFE000B2A63 /* DarkMatterTests */,
+				A5081F6A2EB52AFE000B2A63 /* DarkMatterUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A5081F522EB52AFD000B2A63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F5F2EB52AFE000B2A63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F692EB52AFE000B2A63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5081F502EB52AFD000B2A63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F5D2EB52AFE000B2A63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5081F672EB52AFE000B2A63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A5081F632EB52AFE000B2A63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5081F532EB52AFD000B2A63 /* DarkMatter */;
+			targetProxy = A5081F622EB52AFE000B2A63 /* PBXContainerItemProxy */;
+		};
+		A5081F6D2EB52AFE000B2A63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5081F532EB52AFD000B2A63 /* DarkMatter */;
+			targetProxy = A5081F6C2EB52AFE000B2A63 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A5081F732EB52AFE000B2A63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A5081F742EB52AFE000B2A63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		A5081F762EB52AFE000B2A63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A5081F772EB52AFE000B2A63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A5081F792EB52AFE000B2A63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DarkMatter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DarkMatter";
+			};
+			name = Debug;
+		};
+		A5081F7A2EB52AFE000B2A63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DarkMatter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DarkMatter";
+			};
+			name = Release;
+		};
+		A5081F7C2EB52AFE000B2A63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = DarkMatter;
+			};
+			name = Debug;
+		};
+		A5081F7D2EB52AFE000B2A63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chelak.DarkMatterUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = DarkMatter;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5081F4F2EB52AFD000B2A63 /* Build configuration list for PBXProject "DarkMatter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5081F732EB52AFE000B2A63 /* Debug */,
+				A5081F742EB52AFE000B2A63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5081F752EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5081F762EB52AFE000B2A63 /* Debug */,
+				A5081F772EB52AFE000B2A63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5081F782EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5081F792EB52AFE000B2A63 /* Debug */,
+				A5081F7A2EB52AFE000B2A63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5081F7B2EB52AFE000B2A63 /* Build configuration list for PBXNativeTarget "DarkMatterUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5081F7C2EB52AFE000B2A63 /* Debug */,
+				A5081F7D2EB52AFE000B2A63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../DarkMatterStorage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A54FF3C32EB5314300577DFD /* DarkMatterStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */;
+			productName = DarkMatterStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A5081F4C2EB52AFD000B2A63 /* Project object */;
+}

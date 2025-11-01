@@ -1,14 +1,14 @@
 //
-//  DarkMatterECSTests.swift
-//  DarkMatterECSTests
+//  DarkMatterTests.swift
+//  DarkMatterTests
 //
-//  Created by Sergey on 29.10.2025.
+//  Created by Sergey on 31.10.2025.
 //
 
 import XCTest
-@testable import DarkMatterECS
+@testable import DarkMatter
 
-final class DarkMatterECSTests: XCTestCase {
+final class DarkMatterTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

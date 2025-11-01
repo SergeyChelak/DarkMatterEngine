@@ -1,14 +1,13 @@
 //
 //  CompactArray.swift
-//  DarkMatterECS
+//  DarkMatterStorage
 //
-//  Created by Sergey on 29.10.2025.
+//  Created by Sergey on 31.10.2025.
 //
 
 import Foundation
 
-public struct CompactArray<T> {
-    public typealias IndexChangeCallback = (IndexChange) -> Void
+struct CompactArray<T> {
     private var array: [T]
     fileprivate var length: Int
     
@@ -35,7 +34,6 @@ public struct CompactArray<T> {
     @discardableResult
     public mutating func delete(
         _ index: Int,
-        onIndexChange: IndexChangeCallback? = nil
     ) -> T? {
         guard length > 0 else {
             return nil
@@ -43,15 +41,7 @@ public struct CompactArray<T> {
         let lastIndex = self.length - 1
         let value = self.array[index]
         self.array[index] = self.array[lastIndex]
-        self.length -= 1
-        
-        if let onIndexChange {
-            let changes = IndexChange(
-                old: lastIndex,
-                new: index
-            )
-            onIndexChange(changes)
-        }
+        self.length -= 1        
         return value
     }
     
@@ -60,7 +50,19 @@ public struct CompactArray<T> {
     }
 }
 
-extension CompactArray: Sequence {
+extension CompactArray: Collection {
+    public func index(after i: Int) -> Int {
+        self.array.index(after: i)
+    }
+    
+    public var startIndex: Int {
+        0
+    }
+    
+    public var endIndex: Int {
+        self.length
+    }
+    
     public func makeIterator() -> IndexingIterator<ArraySlice<T>> {
         self.slice.makeIterator()
     }
@@ -76,7 +78,7 @@ extension CompactArray {
     }
 }
 
-public func ==<T>(
+func ==<T>(
     lhs: CompactArray<T>,
     rhs: [T]
 ) -> Bool where T: Equatable {

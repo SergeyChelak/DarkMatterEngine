@@ -1,12 +1,12 @@
 //
 //  CompactArrayTest.swift
-//  DarkMatterECSTests
+//  DarkMatterStorage
 //
-//  Created by Sergey on 29.10.2025.
+//  Created by Sergey on 31.10.2025.
 //
 
 import XCTest
-@testable import DarkMatterECS
+@testable import DarkMatterStorage
 
 final class CompactArrayTest: XCTestCase {
     typealias CompactIntArray = CompactArray<Int>
