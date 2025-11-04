@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import DarkMatterStorage
 
 @main
 struct DarkMatterApp: App {
-    private let storage = Storage()
     
     var body: some Scene {
         WindowGroup {

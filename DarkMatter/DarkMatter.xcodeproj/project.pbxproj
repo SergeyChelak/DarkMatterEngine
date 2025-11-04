@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		A54FF3C42EB5314300577DFD /* DarkMatterStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A54FF3C32EB5314300577DFD /* DarkMatterStorage */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		A5081F622EB52AFE000B2A63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -56,7 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54FF3C42EB5314300577DFD /* DarkMatterStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +120,6 @@
 			);
 			name = DarkMatter;
 			packageProductDependencies = (
-				A54FF3C32EB5314300577DFD /* DarkMatterStorage */,
 			);
 			productName = DarkMatter;
 			productReference = A5081F542EB52AFD000B2A63 /* DarkMatter.app */;
@@ -210,7 +204,6 @@
 			mainGroup = A5081F4B2EB52AFD000B2A63;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A5081F552EB52AFD000B2A63 /* Products */;
@@ -580,21 +573,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../DarkMatterStorage;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A54FF3C32EB5314300577DFD /* DarkMatterStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A5081F8A2EB53087000B2A63 /* XCLocalSwiftPackageReference "../DarkMatterStorage" */;
-			productName = DarkMatterStorage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A5081F4C2EB52AFD000B2A63 /* Project object */;
 }
