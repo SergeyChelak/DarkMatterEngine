@@ -8,14 +8,20 @@
 import Foundation
 
 public protocol EntityCommand {
-    func spawn() -> EntitySpawner
+    /// Spawn entity thru builder pattern
+    /// Action will be executed at the end of frame
+    func spawn() -> EntityBuilder
     
+    /// Spawn entity from specified set of components
+    /// Action will be executed at the end of frame
     func spawn(with components: [Component])
-    
-    func entity(_ entityId: EntityId) -> EntityProjection
-    
+
+    /// Structural entity modification
+    /// Action will be executed at the end of frame
     func modify(_ entityId: EntityId) -> EntityModifier
     
+    /// Removes entity from storage
+    /// Action will be executed at the end of frame
     func despawn(_ entityId: EntityId) -> EntityDespawner
 }
 
@@ -27,8 +33,8 @@ public protocol EntityModifier: Committable {
 }
 
 
-public protocol EntitySpawner {
-    //
+public protocol EntityBuilder: Committable {
+    func add(_ component: Component) -> Self
 }
 
 

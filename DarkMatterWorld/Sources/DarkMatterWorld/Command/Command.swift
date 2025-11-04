@@ -7,6 +7,9 @@
 
 import Foundation
 
-public protocol Command: EntityCommand {
-    //
+public protocol Command:
+    EntityCommand,
+    ResourceCommand,
+    StateCommand {
+    // extra methods
 }
