@@ -11,8 +11,6 @@ public protocol EntityProjection {
     var entityId: EntityId { get }
     
     func get<T>(_ component: T.Type) -> T?
-}
 
-public protocol MutableEntityProjection: EntityProjection {
-    func set<T>(_ component: T) -> T?
+    func set<T>(_ component: T)
 }

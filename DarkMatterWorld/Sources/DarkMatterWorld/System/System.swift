@@ -10,5 +10,5 @@ import Foundation
 public protocol System {
     var query: Query { get }
     
-    func run(command: Command, queryResult: QueryResult)
+    func run(command: Command, queryResult: any QueryResult)
 }
