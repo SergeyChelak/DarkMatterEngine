@@ -13,6 +13,16 @@ struct DarkMatterApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    NSApplication.shared.windows.forEach {
+                        $0.hideAllElements()
+                    }
+                }
+                .onDisappear {
+                    Darwin.exit(0)
+                }
         }
+        .windowStyle(.hiddenTitleBar)
+        .commandsRemoved()
     }
 }
