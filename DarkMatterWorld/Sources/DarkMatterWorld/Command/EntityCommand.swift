@@ -26,14 +26,14 @@ public protocol EntityCommand {
 }
 
 
-public protocol EntityModifier: Committable {
+public protocol EntityModifier {
     func add(_ component: Component)
     
-    func remove<T: Command>(_ type: T.Type)
+    func remove<T: Component>(_ type: T.Type)
 }
 
 
-public protocol EntityBuilder: Committable {
+public protocol EntityBuilder {
     func add(_ component: Component) -> Self
 }
 

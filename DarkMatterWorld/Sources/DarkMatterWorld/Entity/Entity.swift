@@ -8,6 +8,5 @@
 import Foundation
 
 public struct EntityId: Hashable, Codable, Equatable, Sendable {
-    public let id: Int
-    public let generation: UInt64
+    let id: StableIndex
 }
