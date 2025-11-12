@@ -63,6 +63,7 @@ extension DenseArray: Equatable where T: Equatable {
     }
 }
 
+#if DEBUG
 extension DenseArray {
     func _slice() -> ArraySlice<T> {
         self.array.prefix(self.count)
@@ -76,3 +77,4 @@ extension DenseArray {
         self.array.count
     }
 }
+#endif
