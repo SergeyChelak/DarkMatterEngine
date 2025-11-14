@@ -22,7 +22,7 @@ public protocol EntityCommand {
     
     /// Removes entity from storage
     /// Action will be executed at the end of frame
-    func despawn(_ entityId: EntityId) -> EntityDespawner
+//    func despawn(_ entityId: EntityId) -> EntityDespawner
 }
 
 
@@ -35,9 +35,4 @@ public protocol EntityModifier {
 
 public protocol EntityBuilder {
     func add(_ component: Component) -> Self
-}
-
-
-public protocol EntityDespawner {
-    //
 }

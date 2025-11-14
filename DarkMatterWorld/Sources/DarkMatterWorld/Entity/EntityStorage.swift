@@ -7,35 +7,6 @@
 
 import Foundation
 
-struct ComponentRegistry {
-    private let orderMap: [ComponentIdentifier: Int]
-    
-    init(components: [Component.Type]) {
-        var orderMap: [ComponentIdentifier: Int] = [:]
-        for (index, component) in components.enumerated() {
-            let id = component.componentId
-            orderMap[id] = index
-        }
-        self.orderMap = orderMap
-    }
-    
-    func ordered(components: [Component]) throws -> OrderedComponents {
-        let ordered = try components.sorted { l, r in
-            guard let left = orderMap[l.componentId],
-                  let right = orderMap[r.componentId] else {
-                //fatalError("Unknown component in type order comparison '\(l)' and '\(r)')")
-                throw NSError()
-            }
-            return left < right
-        }
-        return OrderedComponents(components: ordered)
-    }
-}
-
-struct OrderedComponents {
-    let components: [Component]
-}
-
 public final class EntityStorage {
     private let componentRegistry: ComponentRegistry
     private var chunks: [Chunk] = []
@@ -69,17 +40,5 @@ public final class EntityStorage {
     // TODO: fix result type
     func execute(_ query: Query) -> any QueryResult {
         fatalError()
-    }
-}
-
-final class Chunk {
-    private var count: Int = 0
-    private let capacity: Int
-    
-    init(
-        orderedComponents: OrderedComponents,
-        capacity: Int
-    ) {
-        self.capacity = capacity
     }
 }
