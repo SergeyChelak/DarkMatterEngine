@@ -44,4 +44,11 @@ final class Chunk {
         self.count += 1
         return slot
     }
+    
+    func remove(at index: Int) -> Int {
+        for var row in data {
+            _ = row.remove(at: index)
+        }
+        return data.first!.count
+    }
 }

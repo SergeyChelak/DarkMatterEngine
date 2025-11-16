@@ -26,10 +26,19 @@ final class ChunkStore {
     }
     
     func remove(at location: EntityLocation) -> StructuralChange.EntityMoved {
-        fatalError()
+        let affectedIndex = chunks[location.chunkIndex]
+            .remove(at: location.index)
+        let affectedLocation = EntityLocation(
+            chunkIndex: location.chunkIndex,
+            index: affectedIndex
+        )
+        return .init(
+            previous: affectedLocation,
+            current: location
+        )
     }
     
-    // Public method. Move it to the protocol
+    // TODO: Public method. Move it to the protocol
     func append(_ components: [Component]) throws -> StructuralChange.EntityInserted {
         let canonizedComponents = try components.canonize(orderMap)
         let canonizedIds = canonizedComponents.canonizedIdentifiers()
@@ -39,7 +48,7 @@ final class ChunkStore {
             chunkIndex: chunkIndex,
             index: index
         )
-        return StructuralChange.EntityInserted(location: location)
+        return .init(location: location)
     }
     
     private func pushNewChunk(
