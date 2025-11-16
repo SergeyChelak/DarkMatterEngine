@@ -27,34 +27,21 @@ final class ChunkStore {
     }
     
     func remove(_ entityId: EntityId) throws {
-        let index = entityId.id
-        guard let location = entities.get(at: index) else {
+        let stableIndex = entityId.id
+        guard let location = entities.get(at: stableIndex) else {
             throw DarkMatterError.entityNotFound(entityId)
         }
-        entities.remove(at: index)
+        entities.remove(at: stableIndex)
         // update location for affected entity
-        let update = remove(at: location)
-        let affectedEntity = update.entityId
+        let affectedEntityId = chunks[location.chunkIndex]
+            .remove(at: location.index)
         let isOk = entities.set(
-            at: affectedEntity.id,
-            newValue: update.current
+            at: affectedEntityId.id,
+            newValue: location
         )
         assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
     }
-    
-    private func remove(at location: EntityLocation) -> StructuralChange.EntityMoved {
-        let (affectedEntityId, index) = chunks[location.chunkIndex]
-            .remove(at: location.index)
-        let affectedLocation = EntityLocation(
-            chunkIndex: location.chunkIndex,
-            index: index
-        )
-        return .init(
-            entityId: affectedEntityId,
-            current: affectedLocation
-        )
-    }
-    
+        
     func append(_ components: [Component]) throws -> EntityId {
         // reserve the slot for a new entity
         let index = entities.append(.invalid)
@@ -159,11 +146,6 @@ enum StructuralChange {
     struct EntityInserted {
         let entityId: EntityId
         let location: EntityLocation
-    }
-    
-    struct EntityMoved {
-        let entityId: EntityId
-        let current: EntityLocation
     }
 }
 

@@ -57,12 +57,12 @@ final class Chunk {
         return slot
     }
     
-    func remove(at index: Int) -> (EntityId, Int) {
+    func remove(at index: Int) -> EntityId {
         for var row in data {
             row.remove(at: index)
         }
         let id = entities[count - 1]
         entities.remove(at: index)
-        return (id, entities.count)
+        return id
     }
 }
