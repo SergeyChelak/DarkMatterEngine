@@ -26,7 +26,6 @@ extension Array where Element == Component {
         _ orderMap: ComponentOrderMap
     ) throws -> CanonizedComponents {
         try canonize(orderMap) { $0.componentId }
-//        return CanonizedComponents(result._array)
     }
 }
 

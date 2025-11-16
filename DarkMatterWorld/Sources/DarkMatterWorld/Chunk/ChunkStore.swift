@@ -16,7 +16,7 @@ final class ChunkStore {
     private let typeMap: ComponentTypeMap
     private let orderMap: ComponentOrderMap
     private let chunkSize: Int
-    // TODO: replace to hashmap to improve chunk search
+    // TODO: replace with hashmap to improve chunk search
     private var chunks: [Chunk] = []
         
     init(
