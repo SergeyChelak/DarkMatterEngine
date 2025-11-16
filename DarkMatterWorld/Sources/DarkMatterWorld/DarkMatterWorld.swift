@@ -9,9 +9,9 @@ public struct EntityId: Hashable, Codable, Equatable, Sendable {
 }
 
 public enum DarkMatterError: Error {
-    case unknownComponent(Component)
+    case unknownComponent(ComponentIdentifier)
     case unexpectedComponentType(String)
-    case componentAddedMultipleTimes(Component)
+    case componentAddedMultipleTimes(ComponentIdentifier)
     case archetypeMismatch
     case chunkOverflow
 }

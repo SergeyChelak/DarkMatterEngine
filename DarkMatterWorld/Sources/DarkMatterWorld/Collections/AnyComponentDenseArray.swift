@@ -12,8 +12,10 @@ struct AnyComponentDenseArray {
     private var internalStorage: AnyComponentArray
 
     // Initializer using a generic type to create the underlying storage
-    init<T: Component>(for type: T.Type) {
-        self.internalStorage = DenseComponentArray(DenseArray<T>())
+    init<T: Component>(for type: T.Type, capacity: Int) {
+        self.internalStorage = DenseComponentArray(
+            DenseArray<T>(capacity: capacity)
+        )
     }
     
     var count: Int {

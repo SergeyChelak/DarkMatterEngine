@@ -8,31 +8,27 @@
 import Foundation
 
 public protocol EntityCommand {
-    /// Spawn entity thru builder pattern
-    /// Action will be executed at the end of frame
-    func spawn() -> EntityBuilder
-    
     /// Spawn entity from specified set of components
     /// Action will be executed at the end of frame
-    func spawn(with components: [Component])
+    func spawn(_ components: [Component])
 
     /// Structural entity modification
     /// Action will be executed at the end of frame
-    func modify(_ entityId: EntityId) -> EntityModifier
-    
-    /// Removes entity from storage
-    /// Action will be executed at the end of frame
-//    func despawn(_ entityId: EntityId) -> EntityDespawner
+    func entity(_ entityId: EntityId) -> EntityModifier
 }
 
 
 public protocol EntityModifier {
-    func add(_ component: Component)
+    func add(_ component: Component) -> EntityModifier
     
-    func remove<T: Component>(_ type: T.Type)
-}
+    func remove<T: Component>(_ type: T.Type) -> EntityModifier
+    
+    /// Removes entity from storage
+    /// Action will be executed at the end of frame
+    func despawn(_ entityId: EntityId)
+    
+    func get<T>(_ component: T.Type) -> T?
 
+    func set<T>(_ component: T) -> EntityModifier
 
-public protocol EntityBuilder {
-    func add(_ component: Component) -> Self
 }

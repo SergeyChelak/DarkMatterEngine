@@ -1,12 +1,17 @@
 import XCTest
 @testable import DarkMatterWorld
 
-final class DarkMatterWorldTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
-
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+final class ComponentRegistryTest: XCTestCase {
+    struct A: Component {
+        let val: Int
+    }
+    
+    struct B: Component {
+        let val: String
+    }
+    
+    func testInstantiate() throws {
+        let registry = ComponentRegistry(components: [A.self, B.self])
+        
     }
 }

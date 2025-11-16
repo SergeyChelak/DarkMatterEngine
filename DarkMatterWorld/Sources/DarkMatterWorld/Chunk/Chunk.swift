@@ -9,33 +9,33 @@ import Foundation
 
 final class Chunk {
     private var count: Int = 0
-    private var data: [DenseArray<Component>] = []
-    private let identifiers: OrderedComponentIdentifiers
+    private var data: [AnyComponentDenseArray] = []
+    private let identifiers: CanonizedComponentIdentifiers
     private let size: Int
     
     init(
-        identifiers: OrderedComponentIdentifiers,
+        identifiers: CanonizedComponentIdentifiers,
+        data: [AnyComponentDenseArray],
         size: Int
     ) {
-        // TODO: create storage outside
-        for _ in identifiers {
-            let row = DenseArray<Component>(capacity: size)
-            data.append(row)
-        }
-
-        self.size = size
         self.identifiers = identifiers
+        self.data = data
+        self.size = size
     }
     
-    var freeSlots: Int {
-        size - count
+    var hasFreeSlots: Bool {
+        size > count
+    }
+    
+    func isType(of identifiers: CanonizedComponentIdentifiers) -> Bool {
+        identifiers == self.identifiers
     }
     
     /// Append to chunk a new entity with given components
     /// If archetypes don't match throws error
     /// otherwise return slot index of brand new entity
-    func append(_ components: OrderedComponents) throws -> Int {
-        guard freeSlots > 0 else {
+    func append(_ components: CanonizedComponents) throws -> Int {
+        guard hasFreeSlots else {
             throw DarkMatterError.chunkOverflow
         }
         guard components.count == identifiers.count else {
@@ -46,7 +46,7 @@ final class Chunk {
             guard input.componentId == id else {
                 throw DarkMatterError.archetypeMismatch
             }
-            data[idx].append(input)
+            try data[idx].append(input)
         }
         self.count += 1
         return slot
