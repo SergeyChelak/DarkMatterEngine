@@ -8,7 +8,7 @@
 import Foundation
 
 final class Chunk {
-    private var count: Int = 0
+    private var entities: DenseArray<EntityId>
     private var data: [AnyComponentDenseArray] = []
     private let identifiers: CanonizedComponentIdentifiers
     private let size: Int
@@ -18,9 +18,14 @@ final class Chunk {
         data: [AnyComponentDenseArray],
         size: Int
     ) {
+        self.entities = .init(capacity: size)
         self.identifiers = identifiers
         self.data = data
         self.size = size
+    }
+    
+    var count: Int {
+        entities.count
     }
     
     var hasFreeSlots: Bool {
@@ -30,25 +35,34 @@ final class Chunk {
     /// Append to chunk a new entity with given components
     /// If archetypes don't match throws error
     /// otherwise return slot index of brand new entity
-    func append(_ components: CanonizedComponents) throws -> Int {
-        guard components.count == identifiers.count else {
-            throw DarkMatterError.archetypeMismatch
-        }
-        let slot = self.count
-        for (idx, (input, id)) in zip(components, self.identifiers).enumerated() {
-            guard input.componentId == id else {
-                throw DarkMatterError.archetypeMismatch
-            }
+//    func append(
+//        _ entityId: EntityId,
+//        _ components: CanonizedComponents
+//    ) throws -> Int {
+//        guard components.canonizedIdentifiers() == identifiers else {
+//            throw DarkMatterError.archetypeMismatch
+//        }
+//        return try uncheckedAppend(entityId, components)
+//    }
+    
+    func uncheckedAppend(
+        _ entityId: EntityId,
+        _ components: CanonizedComponents
+    ) throws -> Int {
+        for (idx, input) in components.enumerated() {
             try data[idx].append(input)
         }
-        self.count += 1
+        let slot = self.count
+        entities.append(entityId)
         return slot
     }
     
-    func remove(at index: Int) -> Int {
+    func remove(at index: Int) -> (EntityId, Int) {
         for var row in data {
-            _ = row.remove(at: index)
+            row.remove(at: index)
         }
-        return data.first!.count
+        let id = entities[count - 1]
+        entities.remove(at: index)
+        return (id, entities.count)
     }
 }

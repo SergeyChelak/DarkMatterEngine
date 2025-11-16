@@ -30,6 +30,7 @@ struct AnyComponentDenseArray {
         try internalStorage.appendUntyped(component)
     }
     
+    @discardableResult
     mutating func remove(at index: Int) -> (any Component)? {
         internalStorage.remove(at: index)
     }

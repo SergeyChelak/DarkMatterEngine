@@ -11,6 +11,7 @@ final class ChunkStore {
     private let typeMap: ComponentTypeMap
     private let orderMap: ComponentOrderMap
     private let chunkSize: Int
+    private var entities: GenerationalArray<EntityLocation> = .init()
     private var chunks: [Chunk] = []
     
     // Index map for fast-search corresponding archetype
@@ -25,30 +26,69 @@ final class ChunkStore {
         self.chunkSize = chunkSize
     }
     
-    func remove(at location: EntityLocation) -> StructuralChange.EntityMoved {
-        let affectedIndex = chunks[location.chunkIndex]
+    func remove(_ entityId: EntityId) throws {
+        let index = entityId.id
+        guard let location = entities.get(at: index) else {
+            throw DarkMatterError.entityNotFound(entityId)
+        }
+        entities.remove(at: index)
+        // update location for affected entity
+        let update = remove(at: location)
+        let affectedEntity = update.entityId
+        let isOk = entities.set(
+            at: affectedEntity.id,
+            newValue: update.current
+        )
+        assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
+    }
+    
+    private func remove(at location: EntityLocation) -> StructuralChange.EntityMoved {
+        let (affectedEntityId, index) = chunks[location.chunkIndex]
             .remove(at: location.index)
         let affectedLocation = EntityLocation(
             chunkIndex: location.chunkIndex,
-            index: affectedIndex
+            index: index
         )
         return .init(
-            previous: affectedLocation,
-            current: location
+            entityId: affectedEntityId,
+            current: affectedLocation
         )
     }
     
-    // TODO: Public method. Move it to the protocol
-    func append(_ components: [Component]) throws -> StructuralChange.EntityInserted {
+    func append(_ components: [Component]) throws -> EntityId {
+        // reserve the slot for a new entity
+        let index = entities.append(.invalid)
+        let entityId = EntityId(id: index)
+        do {
+            let location = try append(entityId, components)
+                .location
+            // replace fake value with the correct location
+            let isOk = entities.set(at: index, newValue: location)
+            assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
+        } catch {
+            // undo changes and re-throw error
+            entities.remove(at: index)
+            throw error
+        }
+        return entityId
+    }
+
+    private func append(
+        _ entityId: EntityId,
+        _ components: [Component]
+    ) throws -> StructuralChange.EntityInserted {
         let canonizedComponents = try components.canonize(orderMap)
         let canonizedIds = canonizedComponents.canonizedIdentifiers()
         let chunkIndex = try findFreeChunk(canonizedIds) ?? pushNewChunk(canonizedIds)
-        let index = try chunks[chunkIndex].append(canonizedComponents)
+        let index = try chunks[chunkIndex].uncheckedAppend(entityId, canonizedComponents)
         let location = EntityLocation(
             chunkIndex: chunkIndex,
             index: index
         )
-        return .init(location: location)
+        return .init(
+            entityId: entityId,
+            location: location
+        )
     }
     
     private func pushNewChunk(
@@ -104,15 +144,25 @@ final class ChunkStore {
 struct EntityLocation: Hashable {
     let chunkIndex: Int
     let index: Int
+    
+    static let invalid = Self(
+        chunkIndex: -1,
+        index: -1
+    )
+    
+    var isValid: Bool {
+        chunkIndex >= 0 && index >= 0
+    }
 }
 
 enum StructuralChange {
     struct EntityInserted {
+        let entityId: EntityId
         let location: EntityLocation
     }
     
     struct EntityMoved {
-        let previous: EntityLocation
+        let entityId: EntityId
         let current: EntityLocation
     }
 }
