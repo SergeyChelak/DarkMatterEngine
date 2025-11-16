@@ -27,17 +27,10 @@ final class Chunk {
         size > count
     }
     
-    func isType(of identifiers: CanonizedComponentIdentifiers) -> Bool {
-        identifiers == self.identifiers
-    }
-    
     /// Append to chunk a new entity with given components
     /// If archetypes don't match throws error
     /// otherwise return slot index of brand new entity
     func append(_ components: CanonizedComponents) throws -> Int {
-        guard hasFreeSlots else {
-            throw DarkMatterError.chunkOverflow
-        }
         guard components.count == identifiers.count else {
             throw DarkMatterError.archetypeMismatch
         }

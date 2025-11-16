@@ -51,13 +51,32 @@ struct GenerationalArray<T> {
     }
     
     subscript(index: StableIndex) -> T? {
+        get { get(at: index) }
+        set { set(at: index, newValue: newValue!) }
+    }
+    
+    func get(at index: StableIndex) -> T? {
         let idx = index.slot
         let element = self.array[idx]
         guard element.generation == index.generation,
-            case(.some(let value)) = element.store  else {
+              case(.some(let value)) = element.store  else {
             return nil
         }
         return value
+    }
+    
+    @discardableResult
+    mutating func set(at index: StableIndex, newValue: T) -> Bool {
+        let idx = index.slot
+        let element = self.array[idx]
+        guard element.generation == index.generation else {
+            return false
+        }
+        self.array[idx] = .some(
+            value: newValue,
+            generation: index.generation
+        )
+        return true
     }
     
     @discardableResult

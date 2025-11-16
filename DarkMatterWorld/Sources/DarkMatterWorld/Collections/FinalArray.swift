@@ -27,6 +27,6 @@ extension FinalArray: Equatable where T: Equatable {
     // no op
 }
 
-extension FinalArray {
-    var _array: [T] { array }
+extension FinalArray: Hashable where T: Hashable {
+    // no op
 }

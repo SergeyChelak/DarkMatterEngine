@@ -8,35 +8,38 @@
 import Foundation
 
 final class ChunkStore {
-    struct Location {
-        let chunkIndex: Int
-        let index: Int
-    }
-    
     private let typeMap: ComponentTypeMap
     private let orderMap: ComponentOrderMap
     private let chunkSize: Int
-    // TODO: replace with hashmap to improve chunk search
     private var chunks: [Chunk] = []
-        
+    
+    // Index map for fast-search corresponding archetype
+    private var chunkIndexMap: [CanonizedComponentIdentifiers: [Int]] = [:]
+
     init(
         components: [Component.Type],
-        chunkSize: Int
+        chunkSize: Int,
     ) {
         self.typeMap = .with(components)
         self.orderMap = .with(components)
         self.chunkSize = chunkSize
     }
     
-    func append(_ components: [Component]) throws -> Location {
+    func remove(at location: EntityLocation) -> StructuralChange.EntityMoved {
+        fatalError()
+    }
+    
+    // Public method. Move it to the protocol
+    func append(_ components: [Component]) throws -> StructuralChange.EntityInserted {
         let canonizedComponents = try components.canonize(orderMap)
         let canonizedIds = canonizedComponents.canonizedIdentifiers()
         let chunkIndex = try findFreeChunk(canonizedIds) ?? pushNewChunk(canonizedIds)
         let index = try chunks[chunkIndex].append(canonizedComponents)
-        return Location(
+        let location = EntityLocation(
             chunkIndex: chunkIndex,
             index: index
         )
+        return StructuralChange.EntityInserted(location: location)
     }
     
     private func pushNewChunk(
@@ -45,17 +48,22 @@ final class ChunkStore {
         let index = chunks.count
         let chunk = try allocateChunk(for: canonizedIds, count: chunkSize)
         chunks.append(chunk)
+        
+        var indices = chunkIndexMap[canonizedIds] ?? []
+        indices.append(index)
+        chunkIndexMap[canonizedIds] = indices
+        
         return index
     }
     
     private func findFreeChunk(
         _ identifiers: CanonizedComponentIdentifiers
     ) -> Int? {
-        for (index, chunk) in chunks.enumerated() {
-            guard chunk.isType(of: identifiers) else {
-                continue
-            }
-            if chunk.hasFreeSlots {
+        guard let indices = chunkIndexMap[identifiers] else {
+            return nil
+        }        
+        for index in indices {
+            if chunks[index].hasFreeSlots {
                 return index
             }
         }
@@ -81,6 +89,22 @@ final class ChunkStore {
             data: data,
             size: count
         )
+    }
+}
+
+struct EntityLocation: Hashable {
+    let chunkIndex: Int
+    let index: Int
+}
+
+enum StructuralChange {
+    struct EntityInserted {
+        let location: EntityLocation
+    }
+    
+    struct EntityMoved {
+        let previous: EntityLocation
+        let current: EntityLocation
     }
 }
 
