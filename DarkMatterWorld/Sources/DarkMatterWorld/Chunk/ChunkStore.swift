@@ -43,39 +43,30 @@ final class ChunkStore {
     }
         
     func append(_ components: [Component]) throws -> EntityId {
-        // reserve the slot for a new entity
-        let index = entities.append(.invalid)
-        let entityId = EntityId(id: index)
-        do {
-            let location = try append(entityId, components)
-                .location
-            // replace fake value with the correct location
-            let isOk = entities.set(at: index, newValue: location)
-            assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
-        } catch {
-            // undo changes and re-throw error
-            entities.remove(at: index)
-            throw error
-        }
-        return entityId
-    }
-
-    private func append(
-        _ entityId: EntityId,
-        _ components: [Component]
-    ) throws -> StructuralChange.EntityInserted {
+        // ensure that we can add an new entity to some chunk
         let canonizedComponents = try components.canonize(orderMap)
         let canonizedIds = canonizedComponents.canonizedIdentifiers()
         let chunkIndex = try findFreeChunk(canonizedIds) ?? pushNewChunk(canonizedIds)
-        let index = try chunks[chunkIndex].uncheckedAppend(entityId, canonizedComponents)
-        let location = EntityLocation(
-            chunkIndex: chunkIndex,
-            index: index
-        )
-        return .init(
-            entityId: entityId,
-            location: location
-        )
+        
+        // reserve the slot for a new entity
+        let stableIndex = entities.append(.invalid)
+        let entityId = EntityId(id: stableIndex)
+        do {
+            let index = try chunks[chunkIndex]
+                .uncheckedAppend(entityId, canonizedComponents)
+            let location = EntityLocation(
+                chunkIndex: chunkIndex,
+                index: index
+            )
+            // replace fake value with the correct location
+            let isOk = entities.set(at: stableIndex, newValue: location)
+            assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
+        } catch {
+            // undo changes and re-throw error
+            entities.remove(at: stableIndex)
+            throw error
+        }
+        return entityId
     }
     
     private func pushNewChunk(
@@ -139,13 +130,6 @@ struct EntityLocation: Hashable {
     
     var isValid: Bool {
         chunkIndex >= 0 && index >= 0
-    }
-}
-
-enum StructuralChange {
-    struct EntityInserted {
-        let entityId: EntityId
-        let location: EntityLocation
     }
 }
 
