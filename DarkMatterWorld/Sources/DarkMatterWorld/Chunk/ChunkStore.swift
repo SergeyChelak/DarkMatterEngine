@@ -185,7 +185,7 @@ fileprivate extension ComponentTypeMap {
 
 typealias ComponentOrderMap = [ComponentIdentifier: Int]
 
-fileprivate extension ComponentOrderMap {
+extension ComponentOrderMap {
     static func with(_ components: [Component.Type]) -> Self {
         var orderMap = Self()
         for (index, component) in components.enumerated() {
@@ -195,3 +195,13 @@ fileprivate extension ComponentOrderMap {
         return orderMap
     }
 }
+
+#if DEBUG
+extension ChunkStore {
+    var _entitiesCount: Int { entities.count }
+    var _chunksCount: Int { chunks.count }
+    var _typeMapCount: Int { typeMap.count }
+    var _orderMapCount: Int { orderMap.count }
+    var _chunkSize: Int { chunkSize }
+}
+#endif
