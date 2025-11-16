@@ -26,6 +26,26 @@ final class ChunkStore {
         self.chunkSize = chunkSize
     }
     
+    func get<T: Component>(_ entityId: EntityId, type: T.Type) -> T? {
+        fatalError()
+    }
+    
+    func set<T: Component>(_ entityId: EntityId, value: T) -> Bool {
+        fatalError()
+    }
+    
+    func addComponent<T: Component>(_ entityId: EntityId, _ value: T) throws {
+        var components = getAllComponents(entityId)
+        components.append(value)
+        try alter(entityId, with: components)
+    }
+    
+    func removeComponent<T: Component>(_ entityId: EntityId, _ type: T.Type) throws {
+        let components = getAllComponents(entityId)
+            .filter { $0.componentId != T.componentId }
+        try alter(entityId, with: components)
+    }
+        
     func remove(_ entityId: EntityId) throws {
         let stableIndex = entityId.id
         guard let location = entities.get(at: stableIndex) else {
@@ -41,31 +61,36 @@ final class ChunkStore {
         )
         assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
     }
-        
+    
     func append(_ components: [Component]) throws -> EntityId {
+        try write(components) {
+            // reserve the slot for a new entity
+            let stableIndex = entities.append(.invalid)
+            return EntityId(id: stableIndex)
+        }
+    }
+        
+    @discardableResult
+    private func write(
+        _ components: [Component],
+        destinationEntityId: () -> EntityId
+    ) throws -> EntityId {
         // ensure that we can add an new entity to some chunk
         let canonizedComponents = try components.canonize(orderMap)
         let canonizedIds = canonizedComponents.canonizedIdentifiers()
         let chunkIndex = try findFreeChunk(canonizedIds) ?? pushNewChunk(canonizedIds)
         
-        // reserve the slot for a new entity
-        let stableIndex = entities.append(.invalid)
-        let entityId = EntityId(id: stableIndex)
-        do {
-            let index = try chunks[chunkIndex]
-                .uncheckedAppend(entityId, canonizedComponents)
-            let location = EntityLocation(
-                chunkIndex: chunkIndex,
-                index: index
-            )
-            // replace fake value with the correct location
-            let isOk = entities.set(at: stableIndex, newValue: location)
-            assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
-        } catch {
-            // undo changes and re-throw error
-            entities.remove(at: stableIndex)
-            throw error
-        }
+        let entityId = destinationEntityId()
+        
+        let index = try chunks[chunkIndex]
+            .uncheckedAppend(entityId, canonizedComponents)
+        let location = EntityLocation(
+            chunkIndex: chunkIndex,
+            index: index
+        )
+        // write final location for specified entityId
+        let isOk = entities.set(at: entityId.id, newValue: location)
+        assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
         return entityId
     }
     
@@ -117,6 +142,22 @@ final class ChunkStore {
             size: count
         )
     }
+    
+    private func getAllComponents(_ entityId: EntityId) -> [Component] {
+        fatalError()
+    }
+    
+    private func alter(
+        _ entityId: EntityId,
+        with components: [any Component]
+    ) throws {
+        let stableIndex = entityId.id
+        guard let location = entities.get(at: stableIndex) else {
+            throw DarkMatterError.entityNotFound(entityId)
+        }
+        chunks[location.chunkIndex].remove(at: location.index)
+        try write(components) { entityId }
+    }
 }
 
 struct EntityLocation: Hashable {
@@ -127,10 +168,6 @@ struct EntityLocation: Hashable {
         chunkIndex: -1,
         index: -1
     )
-    
-    var isValid: Bool {
-        chunkIndex >= 0 && index >= 0
-    }
 }
 
 fileprivate typealias ComponentTypeMap = [ComponentIdentifier: Component.Type]

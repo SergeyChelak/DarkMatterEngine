@@ -57,6 +57,7 @@ final class Chunk {
         return slot
     }
     
+    @discardableResult
     func remove(at index: Int) -> EntityId {
         for var row in data {
             row.remove(at: index)
