@@ -106,7 +106,11 @@ final class ChunkStore {
         _ canonizedIds: CanonizedComponentIdentifiers
     ) throws -> Int {
         let index = chunks.count
-        let chunk = try allocateChunk(for: canonizedIds, count: chunkSize)
+        let chunk = try Chunk(
+            identifiers: canonizedIds,
+            count: chunkSize,
+            typeMap: typeMap
+        )
         chunks.append(chunk)
         
         var indices = chunkIndexMap[canonizedIds] ?? []
@@ -128,27 +132,6 @@ final class ChunkStore {
             }
         }
         return nil
-    }
-    
-    private func allocateChunk(
-        for identifiers: CanonizedComponentIdentifiers,
-        count: Int
-    ) throws -> Chunk {
-        let data = try identifiers
-            .map {
-                guard let type = typeMap[$0] else {
-                    throw DarkMatterError.unknownComponent($0)
-                }
-                return AnyComponentDenseArray(
-                    for: type,
-                    capacity: count
-                )
-            }
-        return Chunk(
-            identifiers: identifiers,
-            data: data,
-            size: count
-        )
     }
     
     private func getAllComponents(_ entityId: EntityId) throws -> [Component] {

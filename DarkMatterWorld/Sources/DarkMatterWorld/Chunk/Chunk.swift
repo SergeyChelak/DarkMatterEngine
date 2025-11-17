@@ -14,6 +14,28 @@ final class Chunk {
     private let size: Int
     private let orderMap: ComponentOrderMap
     
+    convenience init(
+        identifiers: CanonizedComponentIdentifiers,
+        count: Int,
+        typeMap: ComponentTypeMap
+    ) throws {
+        let data = try identifiers
+            .map {
+                guard let type = typeMap[$0] else {
+                    throw DarkMatterError.unknownComponent($0)
+                }
+                return AnyComponentDenseArray(
+                    for: type,
+                    capacity: count
+                )
+            }
+        self.init(
+            identifiers: identifiers,
+            data: data,
+            size: count
+        )
+    }
+        
     init(
         identifiers: CanonizedComponentIdentifiers,
         data: [AnyComponentDenseArray],
@@ -48,11 +70,23 @@ final class Chunk {
     
     func set<T: Component>(at index: Int, _ value: T) -> Bool {
         guard let row = orderMap[value.componentId] else {
-            print("[warn] Requested component not found")
             return false
         }
         data[row][index] = value
         return true
+    }
+    
+    func append(
+        _ entityId: EntityId,
+        _ components: CanonizedComponents
+    ) throws -> Int {
+        guard components.canonizedIdentifiers() == identifiers else {
+            throw DarkMatterError.archetypeMismatch
+        }
+        guard hasFreeSlots else {
+            throw DarkMatterError.chunkOverflow
+        }
+        return try uncheckedAppend(entityId, components)
     }
     
     func uncheckedAppend(
@@ -77,3 +111,15 @@ final class Chunk {
         return id
     }
 }
+
+/// for tests only
+/// don't use these functions for other purposes
+#if DEBUG
+extension Chunk {
+    var _rowCount: Int { data.count }
+    var _size: Int { size }
+    func _stableIndex(at position: Int) -> StableIndex {
+        entities[position].id
+    }
+}
+#endif
