@@ -17,7 +17,7 @@ final class ComponentMappingTests: XCTestCase {
             C5.self,
         ]
         
-        let map: ComponentOrderMap = .with(components)
+        let map: ComponentOrderMap = .with(components) { $0.componentId }
         for (i, c) in components.enumerated() {
             XCTAssertEqual(i, map[c.componentId])
         }
@@ -35,7 +35,7 @@ final class ComponentMappingTests: XCTestCase {
             C1.self
         ]
         
-        let map: ComponentOrderMap = .with(components)
+        let map: ComponentOrderMap = .with(components) { $0.componentId }
         XCTAssertEqual(5, map.values.count)
     }
 }

@@ -12,6 +12,7 @@ final class Chunk {
     private var data: [AnyComponentDenseArray] = []
     private let identifiers: CanonizedComponentIdentifiers
     private let size: Int
+    private let orderMap: ComponentOrderMap
     
     init(
         identifiers: CanonizedComponentIdentifiers,
@@ -20,6 +21,7 @@ final class Chunk {
     ) {
         self.entities = .init(capacity: size)
         self.identifiers = identifiers
+        self.orderMap = .with(identifiers) { $0 }
         self.data = data
         self.size = size
     }
@@ -30,6 +32,27 @@ final class Chunk {
     
     var hasFreeSlots: Bool {
         size > count
+    }
+    
+    func get<T: Component>(at index: Int, _ type: T.Type) -> T? {
+        guard let row = orderMap[type.componentId] else {
+            print("[warn] Requested component not found")
+            return nil
+        }
+        return data[row][index] as? T
+    }
+    
+    func getAllComponents(at index: Int) -> [Component] {
+        data.map { $0[index] }
+    }
+    
+    func set<T: Component>(at index: Int, _ value: T) -> Bool {
+        guard let row = orderMap[value.componentId] else {
+            print("[warn] Requested component not found")
+            return false
+        }
+        data[row][index] = value
+        return true
     }
     
     func uncheckedAppend(

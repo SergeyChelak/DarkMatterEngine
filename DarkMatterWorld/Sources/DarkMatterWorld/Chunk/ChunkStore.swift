@@ -22,26 +22,34 @@ final class ChunkStore {
         chunkSize: Int,
     ) {
         self.typeMap = .with(components)
-        self.orderMap = .with(components)
+        self.orderMap = .with(components) { $0.componentId }
         self.chunkSize = chunkSize
     }
     
     func get<T: Component>(_ entityId: EntityId, type: T.Type) -> T? {
-        fatalError()
+        guard let location = entities[entityId.id] else {
+            return nil
+        }
+        return chunks[location.chunkIndex]
+            .get(at: location.index, type)
     }
     
     func set<T: Component>(_ entityId: EntityId, value: T) -> Bool {
-        fatalError()
+        guard let location = entities[entityId.id] else {
+            return false
+        }
+        return chunks[location.chunkIndex]
+            .set(at: location.index, value)
     }
     
     func addComponent<T: Component>(_ entityId: EntityId, _ value: T) throws {
-        var components = getAllComponents(entityId)
+        var components = try getAllComponents(entityId)
         components.append(value)
         try alter(entityId, with: components)
     }
     
     func removeComponent<T: Component>(_ entityId: EntityId, _ type: T.Type) throws {
-        let components = getAllComponents(entityId)
+        let components = try getAllComponents(entityId)
             .filter { $0.componentId != T.componentId }
         try alter(entityId, with: components)
     }
@@ -143,8 +151,12 @@ final class ChunkStore {
         )
     }
     
-    private func getAllComponents(_ entityId: EntityId) -> [Component] {
-        fatalError()
+    private func getAllComponents(_ entityId: EntityId) throws -> [Component] {
+        guard let location = entities[entityId.id] else {
+            throw DarkMatterError.entityNotFound(entityId)
+        }
+        return chunks[location.chunkIndex]
+            .getAllComponents(at: location.index)
     }
     
     private func alter(
@@ -168,32 +180,6 @@ struct EntityLocation: Hashable {
         chunkIndex: -1,
         index: -1
     )
-}
-
-fileprivate typealias ComponentTypeMap = [ComponentIdentifier: Component.Type]
-
-fileprivate extension ComponentTypeMap {
-    static func with(_ components: [Component.Type]) -> Self {
-        var map = Self()
-        for component in components {
-            let id = component.componentId
-            map[id] = component
-        }
-        return map
-    }
-}
-
-typealias ComponentOrderMap = [ComponentIdentifier: Int]
-
-extension ComponentOrderMap {
-    static func with(_ components: [Component.Type]) -> Self {
-        var orderMap = Self()
-        for (index, component) in components.enumerated() {
-            let id = component.componentId
-            orderMap[id] = index
-        }
-        return orderMap
-    }
 }
 
 #if DEBUG
