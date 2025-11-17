@@ -32,19 +32,6 @@ final class Chunk {
         size > count
     }
     
-    /// Append to chunk a new entity with given components
-    /// If archetypes don't match throws error
-    /// otherwise return slot index of brand new entity
-//    func append(
-//        _ entityId: EntityId,
-//        _ components: CanonizedComponents
-//    ) throws -> Int {
-//        guard components.canonizedIdentifiers() == identifiers else {
-//            throw DarkMatterError.archetypeMismatch
-//        }
-//        return try uncheckedAppend(entityId, components)
-//    }
-    
     func uncheckedAppend(
         _ entityId: EntityId,
         _ components: CanonizedComponents
