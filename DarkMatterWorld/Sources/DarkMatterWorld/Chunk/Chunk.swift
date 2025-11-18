@@ -58,7 +58,6 @@ final class Chunk {
     
     func get<T: Component>(at index: Int, _ type: T.Type) -> T? {
         guard let row = orderMap[type.componentId] else {
-            print("[warn] Requested component not found")
             return nil
         }
         return data[row][index] as? T
@@ -121,5 +120,6 @@ extension Chunk {
     func _stableIndex(at position: Int) -> StableIndex {
         entities[position].id
     }
+    var _entitiesCount: Int { entities.count }
 }
 #endif
