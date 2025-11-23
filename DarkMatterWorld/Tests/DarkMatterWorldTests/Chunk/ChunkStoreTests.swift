@@ -9,18 +9,19 @@ import XCTest
 @testable import DarkMatterWorld
 
 final class ChunkStoreTests: XCTestCase {
-    struct C1: Component {}
-    struct C2: Component {}
-    struct C3: Component {}
-    struct C4: Component {}
-    struct C5: Component {}
+    typealias FloatValue = ChunkShared.FloatValue
+    typealias IntValue = ChunkShared.IntValue
+    typealias BoolValue = ChunkShared.BoolValue
+    typealias StringValue = ChunkShared.StringValue
+    
+    struct Marker: Component {}
     
     let components: [Component.Type] = [
-        C1.self,
-        C2.self,
-        C3.self,
-        C4.self,
-        C5.self,
+        FloatValue.self,
+        IntValue.self,
+        BoolValue.self,
+        StringValue.self,
+        Marker.self,
     ]
     
     private var chunkStore: ChunkStore!
@@ -41,30 +42,61 @@ final class ChunkStoreTests: XCTestCase {
     }
     
     func testAddEntitiesOfSameArchetype() {
-        try! _ = chunkStore.append([C1(), C2()])
-        try! _ = chunkStore.append([C1(), C2()])
+        try! _ = chunkStore.append([FloatValue(value: 1.0), Marker()])
+        try! _ = chunkStore.append([FloatValue(value: 1.5), Marker()])
         XCTAssertEqual(2, chunkStore._entitiesCount)
         XCTAssertEqual(1, chunkStore._chunksCount)
     }
     
     func testAddEntitiesOfSameArchetypeWithComponentOrder() {
-        try! _ = chunkStore.append([C1(), C2(), C3(), C4()])
-        try! _ = chunkStore.append([C2(), C1(), C4(), C3()])
+        let first: [Component] = [
+            FloatValue(value: 0.5),
+            IntValue(value: 2),
+            StringValue(value: "aaa"),
+            Marker()
+        ]
+        
+        let second: [Component] = [
+            IntValue(value: 5),
+            FloatValue(value: 1.5),
+            Marker(),
+            StringValue(value: "BBB")
+        ]
+        
+        try! _ = chunkStore.append(first)
+        try! _ = chunkStore.append(second)
         XCTAssertEqual(2, chunkStore._entitiesCount)
         XCTAssertEqual(1, chunkStore._chunksCount)
     }
     
     func testAddEntitiesOfDifferentArchetypes() {
-        try! _ = chunkStore.append([C1(), C2()])
-        try! _ = chunkStore.append([C1(), C3()])
-        try! _ = chunkStore.append([C4(), C3()])
+        try! _ = chunkStore.append([
+            Marker(),
+            StringValue(value: "aaa"),
+        ])
+        try! _ = chunkStore.append([
+            Marker(),
+            IntValue(value: 2),
+        ])
+        try! _ = chunkStore.append([
+            FloatValue(value: 1.5),
+            IntValue(value: 4),
+        ])
         XCTAssertEqual(3, chunkStore._entitiesCount)
         XCTAssertEqual(3, chunkStore._chunksCount)
     }
     
     func testAddEntitiesOfSameArchetypeIntoDifferentChunks() {
+        let strOptions = ["AAA", "AA", "A", "ABCDEF"]
+        
         for _ in 0...chunkStore._chunkSize {
-            try! _ = chunkStore.append([C1(), C2(), C3(), C4()])
+            let components: [Component] = [
+                Marker(),
+                StringValue(value: strOptions.randomElement()!),
+                IntValue(value: Int.random(in: 2...50)),
+                FloatValue(value: Float.random(in: -1...1)),
+            ]
+            try! _ = chunkStore.append(components)
         }
         XCTAssertEqual(chunkStore._chunkSize + 1, chunkStore._entitiesCount)
         XCTAssertEqual(2, chunkStore._chunksCount)

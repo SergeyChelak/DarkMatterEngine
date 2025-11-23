@@ -10,21 +10,10 @@ import XCTest
 @testable import DarkMatterWorld
 
 final class ChunkTests: XCTestCase {
-    struct FloatValue: Component, Equatable {
-        let value: Float
-    }
-
-    struct IntValue: Component, Equatable {
-        let value: Int
-    }
-
-    struct BoolValue: Component, Equatable {
-        let value: Bool
-    }
-
-    struct StringValue: Component, Equatable {
-        let value: String
-    }
+    typealias FloatValue = ChunkShared.FloatValue
+    typealias IntValue = ChunkShared.IntValue
+    typealias BoolValue = ChunkShared.BoolValue
+    typealias StringValue = ChunkShared.StringValue
     
     struct UndefinedComponent: Component { }
     
