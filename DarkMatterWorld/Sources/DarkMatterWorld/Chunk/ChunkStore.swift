@@ -26,6 +26,10 @@ final class ChunkStore {
         self.chunkSize = chunkSize
     }
     
+    func isAlive(_ entityId: EntityId) -> Bool {
+        entities[entityId.id] != nil
+    }
+    
     func get<T: Component>(_ entityId: EntityId, type: T.Type) -> T? {
         guard let location = entities[entityId.id] else {
             return nil
@@ -172,5 +176,6 @@ extension ChunkStore {
     var _typeMapCount: Int { typeMap.count }
     var _orderMapCount: Int { orderMap.count }
     var _chunkSize: Int { chunkSize }
+    var _archetypesCount: Int { chunkIndexMap.count }
 }
 #endif

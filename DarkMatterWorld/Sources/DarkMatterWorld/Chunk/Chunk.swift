@@ -102,11 +102,13 @@ final class Chunk {
     
     @discardableResult
     func remove(at index: Int) -> EntityId {
-        for var row in data {
-            row.remove(at: index)
+        for row in 0..<data.count {
+            data[row].remove(at: index)
         }
         let id = entities[count - 1]
         entities.remove(at: index)
+        
+        assert(data.allSatisfy { $0.count == entities.count })
         return id
     }
 }
