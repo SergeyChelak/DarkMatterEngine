@@ -65,13 +65,16 @@ final class ChunkStore {
         }
         entities.remove(at: stableIndex)
         // update location for affected entity
-        let affectedEntityId = chunks[location.chunkIndex]
-            .remove(at: location.index)
-        let isOk = entities.set(
-            at: affectedEntityId.id,
-            newValue: location
-        )
-        assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
+        if let affectedEntityId = chunks[location.chunkIndex]
+            .remove(at: location.index) {
+            let isOk = entities.set(
+                at: affectedEntityId.id,
+                newValue: location
+            )
+            if !isOk {
+                throw DarkMatterError.entityRelocateFailed(entityId, location)
+            }
+        }
     }
     
     func append(_ components: [Component]) throws -> EntityId {
@@ -101,8 +104,9 @@ final class ChunkStore {
             index: index
         )
         // write final location for specified entityId
-        let isOk = entities.set(at: entityId.id, newValue: location)
-        assert(isOk, "Failed to update entity \(entityId) with location \(location). May appear due race condition")
+        if !entities.set(at: entityId.id, newValue: location) {
+            throw DarkMatterError.entityRelocateFailed(entityId, location)
+        }
         return entityId
     }
     
@@ -159,7 +163,7 @@ final class ChunkStore {
     }
 }
 
-struct EntityLocation: Hashable {
+public struct EntityLocation: Sendable, Hashable {
     let chunkIndex: Int
     let index: Int
     

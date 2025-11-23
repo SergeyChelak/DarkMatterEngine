@@ -15,5 +15,6 @@ public enum DarkMatterError: Error {
     case archetypeMismatch
     case chunkOverflow
     case entityNotFound(EntityId)
+    case entityRelocateFailed(EntityId, EntityLocation)
 //    case generationMismatch(EntityId)
 }

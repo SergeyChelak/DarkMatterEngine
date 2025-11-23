@@ -210,4 +210,18 @@ final class ChunkStoreTests: XCTestCase {
             newEntityComponents[3] as? FloatValue
         )
     }
+    
+    func testInvalidAccess() {
+        let entity = try! chunkStore.append([
+            Marker(),
+            IntValue(value: 2),
+        ])
+
+        XCTAssertNil(chunkStore.get(entity, type: StringValue.self))
+        XCTAssertFalse(chunkStore.set(entity, value: StringValue(value: "bbb")))
+        
+        try! chunkStore.remove(entity)
+        XCTAssertNil(chunkStore.get(entity, type: Marker.self))
+        XCTAssertFalse(chunkStore.set(entity, value: Marker()))
+    }
 }
