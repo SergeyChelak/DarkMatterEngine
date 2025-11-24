@@ -8,12 +8,6 @@
 import Foundation
 import MetalKit
 
-typealias Vec3f = SIMD3<Float>
-extension Vec3f: Sizable {}
-
-typealias Vec4f = SIMD4<Float>
-extension Vec4f: Sizable {}
-
 struct Vertex: Sizable {
     let position: Vec3f
     let color: Vec4f
@@ -65,10 +59,23 @@ final class Renderer: NSObject {
         let vertexFn = library.makeFunction(name: "basicVertexShader")
         let fragmentFn = library.makeFunction(name: "basicFragmentShader")
         
+        let vertexDescriptor = MTLVertexDescriptor()
+        // position
+        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].bufferIndex = 0
+        vertexDescriptor.attributes[0].offset = 0
+        // color
+        vertexDescriptor.attributes[1].format = .float4
+        vertexDescriptor.attributes[1].bufferIndex = 0
+        vertexDescriptor.attributes[1].offset = Vec3f.stride
+        
+        vertexDescriptor.layouts[0].stride = Vertex.size
+        
         let renderPipelineStateDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         renderPipelineStateDescriptor.vertexFunction = vertexFn
         renderPipelineStateDescriptor.fragmentFunction = fragmentFn
+        renderPipelineStateDescriptor.vertexDescriptor = vertexDescriptor
         
         return try? device.makeRenderPipelineState(descriptor: renderPipelineStateDescriptor)
     }
@@ -76,7 +83,7 @@ final class Renderer: NSObject {
 
 extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        //
+        // TODO: update aspect ratio
     }
     
     func draw(in view: MTKView) {
