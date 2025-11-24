@@ -16,15 +16,22 @@ final class Renderer: NSObject {
     init(
         device: MTLDevice,
         commandQueue: MTLCommandQueue,
+        colorPixelFormat: MTLPixelFormat
     ) {
         self.device = device
         self.commandQueue = commandQueue
         // TODO: fix temporary solution!
-        self.renderPipelineState = Self.createRenderPipelineState(device)
+        self.renderPipelineState = Self.createRenderPipelineState(
+            device,
+            colorPixelFormat: colorPixelFormat
+        )
         super.init()
     }
     
-    private static func createRenderPipelineState(_ device: MTLDevice) -> MTLRenderPipelineState? {
+    private static func createRenderPipelineState(
+        _ device: MTLDevice,
+        colorPixelFormat: MTLPixelFormat
+    ) -> MTLRenderPipelineState? {
         guard let library = device.makeDefaultLibrary() else {
             return nil
         }
@@ -32,7 +39,7 @@ final class Renderer: NSObject {
         let fragmentFn = library.makeFunction(name: "basicFragmentShader")
         
         let renderPipelineStateDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm // make sure that matches to view
+        renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         renderPipelineStateDescriptor.vertexFunction = vertexFn
         renderPipelineStateDescriptor.fragmentFunction = fragmentFn
         

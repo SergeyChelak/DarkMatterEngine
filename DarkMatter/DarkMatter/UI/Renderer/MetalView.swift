@@ -15,21 +15,25 @@ struct MetalView: NSViewRepresentable {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private let preferredFramesPerSecond: Int
+    private let colorPixelFormat: MTLPixelFormat
     
     init(
         device: MTLDevice,
         commandQueue: MTLCommandQueue,
-        preferredFramesPerSecond: Int = 60
+        preferredFramesPerSecond: Int = 60,
+        colorPixelFormat: MTLPixelFormat = .bgra8Unorm
     ) {
         self.device = device
         self.commandQueue = commandQueue
         self.preferredFramesPerSecond = preferredFramesPerSecond
+        self.colorPixelFormat = colorPixelFormat
     }
     
     func makeCoordinator() -> Coordinator {
         Renderer(
             device: device,
-            commandQueue: commandQueue
+            commandQueue: commandQueue,
+            colorPixelFormat: colorPixelFormat
         )
     }
     
@@ -37,16 +41,12 @@ struct MetalView: NSViewRepresentable {
         let view = MTKView()
         view.device = device
         // TODO: parametrize
-        view.colorPixelFormat = .bgra8Unorm
+        view.colorPixelFormat = colorPixelFormat
         view.clearColor = MTLClearColor(red: 0.4, green: 0.8, blue: 0.5, alpha: 1.0)
         
         view.delegate = context.coordinator
         view.preferredFramesPerSecond = preferredFramesPerSecond
         view.enableSetNeedsDisplay = true
-        
-        
-        
-        
         return view
     }
 
