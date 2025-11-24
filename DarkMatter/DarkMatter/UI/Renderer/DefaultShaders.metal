@@ -9,8 +9,11 @@
 using namespace metal;
 
 
-[[vertex]] float4 basicVertexShader() {
-    return float4(1);
+[[vertex]] float4 basicVertexShader(
+    constant float3 *vertices [[buffer(0)]],
+    uint vertexID [[ vertex_id ]]
+) {
+    return float4(vertices[vertexID], 1.0);
 }
 
 [[fragment]] half4 basicFragmentShader() {

@@ -8,10 +8,14 @@
 import Foundation
 import MetalKit
 
+typealias Float3 = SIMD3<Float>
+
 final class Renderer: NSObject {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private let renderPipelineState: MTLRenderPipelineState?
+    
+    private let vertexBuffer: MTLBuffer?
     
     init(
         device: MTLDevice,
@@ -25,9 +29,23 @@ final class Renderer: NSObject {
             device,
             colorPixelFormat: colorPixelFormat
         )
+        
+        vertexBuffer = device.makeBuffer(
+            bytes: vertices,
+            length: MemoryLayout<Float3>.stride * vertices.count,
+            options: []
+        )
+
         super.init()
     }
     
+    let vertices: [Float3] = [
+        Float3( 0,  1,  0),
+        Float3(-1, -1,  0),
+        Float3( 1, -1,  0)
+    ]
+    
+    // TODO: refactor
     private static func createRenderPipelineState(
         _ device: MTLDevice,
         colorPixelFormat: MTLPixelFormat
@@ -56,6 +74,7 @@ extension Renderer: MTKViewDelegate {
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor,
               let renderPipelineState,
+              let vertexBuffer,
               let commandBuffer = commandQueue.makeCommandBuffer() else {
             return
         }
@@ -64,9 +83,10 @@ extension Renderer: MTKViewDelegate {
         }
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         
-        // TODO: set data command buffer
-        renderCommandEncoder.endEncoding()
+        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         
+        renderCommandEncoder.endEncoding()
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }

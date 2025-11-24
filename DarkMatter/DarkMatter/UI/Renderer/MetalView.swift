@@ -51,7 +51,7 @@ struct MetalView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: MTKView, context: Context) {
-        //
+        // no op
     }
 }
 
