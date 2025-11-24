@@ -8,7 +8,16 @@
 import Foundation
 import MetalKit
 
-typealias Float3 = SIMD3<Float>
+typealias Vec3f = SIMD3<Float>
+extension Vec3f: Sizable {}
+
+typealias Vec4f = SIMD4<Float>
+extension Vec4f: Sizable {}
+
+struct Vertex: Sizable {
+    let position: Vec3f
+    let color: Vec4f
+}
 
 final class Renderer: NSObject {
     private let device: MTLDevice
@@ -32,17 +41,17 @@ final class Renderer: NSObject {
         
         vertexBuffer = device.makeBuffer(
             bytes: vertices,
-            length: MemoryLayout<Float3>.stride * vertices.count,
+            length: Vertex.stride * vertices.count,
             options: []
         )
 
         super.init()
     }
     
-    let vertices: [Float3] = [
-        Float3( 0,  1,  0),
-        Float3(-1, -1,  0),
-        Float3( 1, -1,  0)
+    let vertices: [Vertex] = [
+        Vertex(position: Vec3f( 0,  1,  0), color: Vec4f(1,0,0,1)),
+        Vertex(position: Vec3f(-1, -1,  0), color: Vec4f(0,1,0,1)),
+        Vertex(position: Vec3f( 1, -1,  0), color: Vec4f(0,0,1,1))
     ]
     
     // TODO: refactor
@@ -82,9 +91,11 @@ extension Renderer: MTKViewDelegate {
             return
         }
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        
+
+        // ---
         renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        // ---
         
         renderCommandEncoder.endEncoding()
         commandBuffer.present(drawable)
