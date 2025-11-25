@@ -7,7 +7,14 @@
 
 import MetalKit
 
+enum Shader: String {
+    case defaultVertex = "basicVertexShader"
+    case defaultFragment = "basicFragmentShader"
+}
+
 final class RendererContext {
+    private var shaders: [String: MTLFunction] = [:]
+    
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let library: MTLLibrary
@@ -29,6 +36,29 @@ final class RendererContext {
         self.colorPixelFormat = colorPixelFormat
         self.clearColor = clearColor
         self.preferredFramesPerSecond = preferredFramesPerSecond
+    }
+    
+    @discardableResult
+    func registerShader(for name: String, function: String) -> Bool {
+        guard let fn = library.makeFunction(name: function) else {
+            return false
+        }
+        fn.label = name
+        shaders[name] = fn
+        return true
+    }
+    
+    func shader(_ name: String) -> MTLFunction? {
+        shaders[name]
+    }
+    
+    @discardableResult
+    func registerShader(_ s: Shader) -> Bool {
+        registerShader(for: s.rawValue, function: s.rawValue)
+    }
+    
+    func shader(_ s: Shader) -> MTLFunction? {
+        shader(s.rawValue)
     }
 }
 
@@ -52,7 +82,7 @@ func makeRendererContext(
     guard let library = device.makeDefaultLibrary() else {
         throw .defaultLibraryNotCreated
     }
-    return RendererContext(
+    let context = RendererContext(
         device: device,
         commandQueue: commandQueue,
         library: library,
@@ -60,4 +90,9 @@ func makeRendererContext(
         clearColor: clearColor,
         preferredFramesPerSecond: preferredFramesPerSecond,
     )
+    
+    assert(context.registerShader(.defaultVertex))
+    assert(context.registerShader(.defaultFragment))
+    
+    return context
 }

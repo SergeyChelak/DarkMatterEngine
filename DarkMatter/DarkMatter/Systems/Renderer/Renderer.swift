@@ -26,10 +26,7 @@ final class Renderer: NSObject {
         self.context = rendererContext
 
         // TODO: fix temporary solution!
-        self.renderPipelineState = Self.createRenderPipelineState(
-            rendererContext.device,
-            colorPixelFormat: rendererContext.colorPixelFormat
-        )
+        self.renderPipelineState = Self.createRenderPipelineState(context)
 
         vertexBuffer = rendererContext.device.makeBuffer(
             bytes: vertices,
@@ -48,15 +45,8 @@ final class Renderer: NSObject {
     
     // TODO: refactor
     private static func createRenderPipelineState(
-        _ device: MTLDevice,
-        colorPixelFormat: MTLPixelFormat
+        _ context: RendererContext
     ) -> MTLRenderPipelineState? {
-        guard let library = device.makeDefaultLibrary() else {
-            return nil
-        }
-        let vertexFn = library.makeFunction(name: "basicVertexShader")
-        let fragmentFn = library.makeFunction(name: "basicFragmentShader")
-        
         let vertexDescriptor = MTLVertexDescriptor()
         // position
         vertexDescriptor.attributes[0].format = .float3
@@ -70,12 +60,12 @@ final class Renderer: NSObject {
         vertexDescriptor.layouts[0].stride = Vertex.size
         
         let renderPipelineStateDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-        renderPipelineStateDescriptor.vertexFunction = vertexFn
-        renderPipelineStateDescriptor.fragmentFunction = fragmentFn
+        renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = context.colorPixelFormat
+        renderPipelineStateDescriptor.vertexFunction = context.shader(.defaultVertex)
+        renderPipelineStateDescriptor.fragmentFunction = context.shader(.defaultFragment)
         renderPipelineStateDescriptor.vertexDescriptor = vertexDescriptor
         
-        return try? device.makeRenderPipelineState(descriptor: renderPipelineStateDescriptor)
+        return try? context.device.makeRenderPipelineState(descriptor: renderPipelineStateDescriptor)
     }
 }
 
