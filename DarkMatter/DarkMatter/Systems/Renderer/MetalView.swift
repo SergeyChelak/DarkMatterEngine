@@ -12,22 +12,22 @@ struct MetalView: NSViewRepresentable {
     typealias NSViewType = MTKView
     typealias Coordinator = Renderer
 
-    private let rendererContext: RendererContext
+    let environment: RendererEnvironment
     
-    init(_ rendererContext: RendererContext) {
-        self.rendererContext = rendererContext
+    init(_ environment: RendererEnvironment) {
+        self.environment = environment
     }
-    
+            
     func makeCoordinator() -> Coordinator {
-        Renderer(rendererContext)
+        Renderer(environment)
     }
     
     func makeNSView(context: Context) -> MTKView {
         let view = MTKView()
-        view.device = rendererContext.device
-        view.colorPixelFormat = rendererContext.colorPixelFormat
-        view.clearColor = rendererContext.clearColor
-        view.preferredFramesPerSecond = rendererContext.preferredFramesPerSecond
+        view.device = metal.device
+        view.colorPixelFormat = config.colorPixelFormat
+        view.clearColor = config.clearColor
+        view.preferredFramesPerSecond = config.preferredFramesPerSecond
         view.enableSetNeedsDisplay = true
         view.delegate = context.coordinator
         return view
@@ -38,6 +38,8 @@ struct MetalView: NSViewRepresentable {
     }
 }
 
+extension MetalView: RendererEnvironmentAccessors { }
+
 #Preview {
-    MetalView(try! makeRendererContext())
+    MetalView(try! makeStandardRenderEnvironment())
 }
