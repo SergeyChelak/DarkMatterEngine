@@ -14,26 +14,24 @@ struct Vertex: Sizable {
 }
 
 final class Renderer: NSObject {
-    private let device: MTLDevice
-    private let commandQueue: MTLCommandQueue
+    private let context: RendererContext
+
+    // TODO: remove temp stuff
     private let renderPipelineState: MTLRenderPipelineState?
-    
     private let vertexBuffer: MTLBuffer?
     
     init(
-        device: MTLDevice,
-        commandQueue: MTLCommandQueue,
-        colorPixelFormat: MTLPixelFormat
+        _ rendererContext: RendererContext
     ) {
-        self.device = device
-        self.commandQueue = commandQueue
+        self.context = rendererContext
+
         // TODO: fix temporary solution!
         self.renderPipelineState = Self.createRenderPipelineState(
-            device,
-            colorPixelFormat: colorPixelFormat
+            rendererContext.device,
+            colorPixelFormat: rendererContext.colorPixelFormat
         )
-        
-        vertexBuffer = device.makeBuffer(
+
+        vertexBuffer = rendererContext.device.makeBuffer(
             bytes: vertices,
             length: Vertex.stride * vertices.count,
             options: []
@@ -91,7 +89,7 @@ extension Renderer: MTKViewDelegate {
               let renderPassDescriptor = view.currentRenderPassDescriptor,
               let renderPipelineState,
               let vertexBuffer,
-              let commandBuffer = commandQueue.makeCommandBuffer() else {
+              let commandBuffer = context.commandQueue.makeCommandBuffer() else {
             return
         }
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {

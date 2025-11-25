@@ -11,14 +11,11 @@ import SwiftUI
 
 @main
 struct DarkMatterApp: App {
-    private let engineContext: EngineContext = .preview
+    private let rendererContext = try! makeRendererContext()
     
     var body: some Scene {
         WindowGroup {
-            MetalView(
-                device: engineContext.device,
-                commandQueue: engineContext.commandQueue
-            )
+            MetalView(rendererContext)
 //                .onAppear {
 //                    NSApplication.shared.windows.forEach {
 //                        $0.hideAllElements()
@@ -28,7 +25,7 @@ struct DarkMatterApp: App {
                     Darwin.exit(0)
                 }
         }
-        .windowStyle(.hiddenTitleBar)
+//        .windowStyle(.hiddenTitleBar)
         .commandsRemoved()
     }
 }
