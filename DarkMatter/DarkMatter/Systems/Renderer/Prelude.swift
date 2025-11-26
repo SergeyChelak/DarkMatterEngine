@@ -35,11 +35,3 @@ extension Sizable {
 protocol VertexLayout {
     static var vertexDescriptor: MTLVertexDescriptor { get }
 }
-
-
-protocol Renderable {
-//    var fragmentShader: String { get }
-//    var vertexShader: String { get }
-    
-    func render(_ renderCommandEncoder: MTLRenderCommandEncoder)
-}

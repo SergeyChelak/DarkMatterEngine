@@ -13,6 +13,7 @@ struct Vertex: Sizable {
 }
 
 extension Vertex: VertexLayout {
+    // Warn: must me aligned with shader
     static let vertexDescriptor: MTLVertexDescriptor = {
         let vertexDescriptor = MTLVertexDescriptor()
         // position

@@ -10,26 +10,26 @@ import SwiftUI
 
 struct MetalView: NSViewRepresentable {
     typealias NSViewType = MTKView
-    typealias Coordinator = Renderer
-
-    private let metal: MetalContext
+    
     private let config: RendererConfiguration
     
+    private let rendererSystem: RendererSystem
+    
     init(
-        _ metal: MetalContext,
-        _ config: RendererConfiguration
+        _ rendererSystem: RendererSystem,
+        _ config: RendererConfiguration,
     ) {
-        self.metal = metal
+        self.rendererSystem = rendererSystem
         self.config = config
     }
-            
+    
     func makeCoordinator() -> Coordinator {
-        Renderer(metal, config)
+        Coordinator(rendererSystem)
     }
     
     func makeNSView(context: Context) -> MTKView {
         let view = MTKView()
-        view.device = metal.device
+        view.device = rendererSystem.device
         view.colorPixelFormat = config.colorPixelFormat
         view.clearColor = config.clearColor
         view.preferredFramesPerSecond = config.preferredFramesPerSecond
@@ -37,12 +37,37 @@ struct MetalView: NSViewRepresentable {
         view.delegate = context.coordinator
         return view
     }
-
+    
     func updateNSView(_ nsView: MTKView, context: Context) {
         // no op
     }
 }
 
-#Preview {
-    MetalView(try! makeMetalContext(), .standard)
+
+extension MetalView {
+    final class Coordinator: NSObject, MTKViewDelegate {
+        let renderSystem: RendererSystem
+        init(_ renderSystem: RendererSystem) {
+            self.renderSystem = renderSystem
+        }
+        
+        func draw(in view: MTKView) {
+            guard let drawable = view.currentDrawable,
+                  let renderPassDescriptor = view.currentRenderPassDescriptor else {
+                return
+            }
+            renderSystem.render(
+                drawable: drawable,
+                renderPassDescriptor: renderPassDescriptor
+            )
+        }
+        
+        func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+            // TODO: update aspect ratio
+        }
+    }
 }
+
+//#Preview {
+//    MetalView(try! makeMetalContext(), .standard)
+//}

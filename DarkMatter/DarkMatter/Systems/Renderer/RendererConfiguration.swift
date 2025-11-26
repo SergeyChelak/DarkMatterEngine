@@ -24,7 +24,7 @@ struct RendererConfiguration {
     
     static let standard: Self = Self(
         colorPixelFormat: .bgra8Unorm,
-        clearColor: .init(),
+        clearColor: .init(), // MTLClearColor(red: 0.9, green: 0.4, blue: 0.2, alpha: 1.0), 
         preferredFramesPerSecond: 60
     )
 }
