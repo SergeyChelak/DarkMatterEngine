@@ -22,14 +22,17 @@ class GameObject {
         self.vertices = vertices
     }
     
-    static func with(_ environment: RendererEnvironment) -> GameObject? {
+    static func with(
+        _ metalContext: MetalContext,
+        _ config: RendererConfiguration,
+    ) -> GameObject? {
         let vertices: [Vertex] = [
             Vertex(position: Vec3f( 0,  1,  0), color: Vec4f(1,0,0,1)),
             Vertex(position: Vec3f(-1, -1,  0), color: Vec4f(0,1,0,1)),
             Vertex(position: Vec3f( 1, -1,  0), color: Vec4f(0,0,1,1))
         ]
         
-        guard let vertexBuffer = environment.metalContext.device.makeBuffer(
+        guard let vertexBuffer = metalContext.device.makeBuffer(
             bytes: vertices,
             length: Vertex.stride * vertices.count,
             options: []
@@ -38,7 +41,8 @@ class GameObject {
         }
         
         guard let renderPipelineState = createRenderPipelineState(
-            environment,
+            metalContext: metalContext,
+            config: config,
             for: Vertex.self,
             vertexFunctionName: "basicVertexShader",
             fragmentFunctionName: "basicFragmentShader"
@@ -56,23 +60,24 @@ class GameObject {
 
 // TODO: refactor
 func createRenderPipelineState<T: VertexLayout>(
-    _ env: RendererEnvironment,
+    metalContext: MetalContext,
+    config: RendererConfiguration,
     for type: T.Type,
     vertexFunctionName: String,
     fragmentFunctionName: String,
 ) -> MTLRenderPipelineState? {
     let renderPipelineStateDescriptor = MTLRenderPipelineDescriptor()
-    renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = env.config.colorPixelFormat
+    renderPipelineStateDescriptor.colorAttachments[0].pixelFormat = config.colorPixelFormat
     
-    let vertexFunction = env.metalContext.library.makeFunction(name: vertexFunctionName)
+    let vertexFunction = metalContext.library.makeFunction(name: vertexFunctionName)
     renderPipelineStateDescriptor.vertexFunction = vertexFunction
     
-    let fragmentFunction = env.metalContext.library.makeFunction(name: fragmentFunctionName)
+    let fragmentFunction = metalContext.library.makeFunction(name: fragmentFunctionName)
     renderPipelineStateDescriptor.fragmentFunction = fragmentFunction
     
     renderPipelineStateDescriptor.vertexDescriptor = type.vertexDescriptor
     
-    return try? env.metalContext.device.makeRenderPipelineState(descriptor: renderPipelineStateDescriptor)
+    return try? metalContext.device.makeRenderPipelineState(descriptor: renderPipelineStateDescriptor)
 }
 
 extension GameObject: Renderable {

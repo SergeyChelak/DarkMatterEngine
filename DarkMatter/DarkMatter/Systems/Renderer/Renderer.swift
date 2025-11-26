@@ -9,24 +9,26 @@ import Foundation
 import MetalKit
 
 final class Renderer: NSObject {
-    let environment: RendererEnvironment
+    private let metal: MetalContext
+    private let config: RendererConfiguration
     
     private var gameObjects: [Renderable] = []
     
     init(
-        _ environment: RendererEnvironment
+        _ metal: MetalContext,
+        _ config: RendererConfiguration
     ) {
-        self.environment = environment
+        self.metal = metal
+        self.config = config
+
         // ---
-        if let obj: GameObject = .with(environment) {
+        if let obj: GameObject = .with(metal, config) {
             gameObjects.append(obj)
         }
         // ---
         super.init()
     }    
 }
-
-extension Renderer: RendererEnvironmentAccessors { }
 
 extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {

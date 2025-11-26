@@ -1,5 +1,5 @@
 //
-//  DefaultShaders.metal
+//  BasicShaders.metal
 //  DarkMatter
 //
 //  Created by Sergey on 24.11.2025.

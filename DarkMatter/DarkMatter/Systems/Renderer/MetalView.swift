@@ -12,14 +12,19 @@ struct MetalView: NSViewRepresentable {
     typealias NSViewType = MTKView
     typealias Coordinator = Renderer
 
-    let environment: RendererEnvironment
+    private let metal: MetalContext
+    private let config: RendererConfiguration
     
-    init(_ environment: RendererEnvironment) {
-        self.environment = environment
+    init(
+        _ metal: MetalContext,
+        _ config: RendererConfiguration
+    ) {
+        self.metal = metal
+        self.config = config
     }
             
     func makeCoordinator() -> Coordinator {
-        Renderer(environment)
+        Renderer(metal, config)
     }
     
     func makeNSView(context: Context) -> MTKView {
@@ -38,8 +43,6 @@ struct MetalView: NSViewRepresentable {
     }
 }
 
-extension MetalView: RendererEnvironmentAccessors { }
-
 #Preview {
-    MetalView(try! makeStandardRenderEnvironment())
+    MetalView(try! makeMetalContext(), .standard)
 }

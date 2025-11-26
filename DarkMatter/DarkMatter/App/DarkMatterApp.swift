@@ -11,11 +11,12 @@ import SwiftUI
 
 @main
 struct DarkMatterApp: App {
-    private let environment = try! makeStandardRenderEnvironment()
+    private let metalContext = try! makeMetalContext()
+    private let rendererConfig: RendererConfiguration = .standard
     
     var body: some Scene {
         WindowGroup {
-            MetalView(environment)
+            MetalView(metalContext, rendererConfig)
 //                .onAppear {
 //                    NSApplication.shared.windows.forEach {
 //                        $0.hideAllElements()
