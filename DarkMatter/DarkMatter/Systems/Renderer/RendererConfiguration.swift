@@ -8,22 +8,22 @@
 import MetalKit
 
 struct RendererConfiguration {
-    let colorPixelFormat: MTLPixelFormat
+    let pixelFormat: MTLPixelFormat
     let clearColor: MTLClearColor
     let preferredFramesPerSecond: Int
     
     init(
-        colorPixelFormat: MTLPixelFormat,
+        pixelFormat: MTLPixelFormat,
         clearColor: MTLClearColor,
         preferredFramesPerSecond: Int
     ) {
-        self.colorPixelFormat = colorPixelFormat
+        self.pixelFormat = pixelFormat
         self.clearColor = clearColor
         self.preferredFramesPerSecond = preferredFramesPerSecond
     }
     
     static let standard: Self = Self(
-        colorPixelFormat: .bgra8Unorm,
+        pixelFormat: .bgra8Unorm,
         clearColor: .init(), // MTLClearColor(red: 0.9, green: 0.4, blue: 0.2, alpha: 1.0), 
         preferredFramesPerSecond: 60
     )

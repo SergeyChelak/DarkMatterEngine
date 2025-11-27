@@ -15,7 +15,7 @@ struct RenderableComponent {
 }
 // --- Stub component ---
 
-final class RendererSystem {
+final class RendererSystem: MetalRenderer {
     private let metalContext: MetalContext
     
     private struct RenderData {
@@ -52,7 +52,7 @@ final class RendererSystem {
             )
         }
     }
-    
+
     func render(
         drawable: CAMetalDrawable,
         renderPassDescriptor: MTLRenderPassDescriptor

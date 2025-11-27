@@ -22,7 +22,7 @@ struct DarkMatterApp: App {
         
         assetManager = AssetManager(
             metalContext: metalContext,
-            pixelFormat: rendererConfig.colorPixelFormat
+            pixelFormat: rendererConfig.pixelFormat
         )
         assert(assetManager.mockLoadMesh() != nil)
         assert(assetManager.mockLoadMaterial() != nil)
