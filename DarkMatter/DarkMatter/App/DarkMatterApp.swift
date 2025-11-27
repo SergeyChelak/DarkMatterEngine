@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct DarkMatterApp: App {
-    private let hideWindowDecorations = true
     private let engine = makeEngine()
         
     var body: some Scene {
