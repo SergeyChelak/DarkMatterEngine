@@ -12,7 +12,7 @@ struct Vertex: Sizable {
     let color: Vec4f
 }
 
-extension Vertex: VertexLayout {
+extension Vertex {
     // Warn: must me aligned with shader
     static let vertexDescriptor: MTLVertexDescriptor = {
         let vertexDescriptor = MTLVertexDescriptor()
