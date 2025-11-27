@@ -15,7 +15,7 @@ struct RenderableComponent {
 }
 // --- Stub component ---
 
-final class RendererSystem: MetalRenderer {
+final class RendererSystem: GameSystem, Renderer {
     private let metalContext: MetalContext
     
     private struct RenderData {
@@ -77,5 +77,9 @@ final class RendererSystem: MetalRenderer {
         renderCommandEncoder.endEncoding()
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+    
+    func drawableSizeWillChange(_ size: CGSize) {
+        // TODO: implement
     }
 }

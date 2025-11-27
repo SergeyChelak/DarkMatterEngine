@@ -5,53 +5,24 @@
 //  Created by Sergey on 31.10.2025.
 //
 
-import Combine
-import MetalKit
 import SwiftUI
 
 @main
 struct DarkMatterApp: App {
-    private let metalContext = try! makeMetalContext()
-    private let rendererConfig: RendererConfiguration = .standard
-    private let assetManager: AssetManager
-    
-    private let renderSystem: RendererSystem
-    
-    init() {
-        renderSystem = RendererSystem(metalContext: metalContext)
+    private let hideWindowDecorations = true
+    private let engine = makeEngine()
         
-        assetManager = AssetManager(
-            metalContext: metalContext,
-            pixelFormat: rendererConfig.pixelFormat
-        )
-        assert(assetManager.mockLoadMesh() != nil)
-        assert(assetManager.mockLoadMaterial() != nil)
-    }
-    
     var body: some Scene {
         WindowGroup {
-            MetalView(renderSystem, rendererConfig)
-//                .onAppear {
-//                    NSApplication.shared.windows.forEach {
-//                        $0.hideAllElements()
-//                    }
-//                }
+            engine.view
+                .viewRepresentable()
                 .onAppear {
-                    // simulate one scheduler call
-                    let renderable = RenderableComponent(
-                        meshID: "msh_1",
-                        materialID: "mtrl_1"
-                    )
-                    renderSystem.process(
-                        renderables: [renderable],
-                        assetManager: assetManager
-                    )
+                    engine.run()
                 }
                 .onDisappear {
                     Darwin.exit(0)
                 }
         }
-//        .windowStyle(.hiddenTitleBar)
         .commandsRemoved()
     }
 }
