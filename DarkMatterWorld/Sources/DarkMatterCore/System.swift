@@ -7,8 +7,8 @@
 
 import Foundation
 
-//public protocol System {
+public protocol System {
 //    var query: Query { get }
 //    
 //    func run(command: Command, queryResult: any QueryResult)
-//}
+}
