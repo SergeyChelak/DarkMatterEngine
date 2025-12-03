@@ -5,7 +5,6 @@
 //  Created by Sergey on 05.11.2025.
 //
 
-import DarkMatterCore
 import Foundation
 
 public protocol EntityCommand {

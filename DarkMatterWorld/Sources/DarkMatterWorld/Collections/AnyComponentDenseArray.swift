@@ -5,7 +5,6 @@
 //  Created by Sergey on 13.11.2025.
 //
 
-import DarkMatterCore
 import Foundation
 
 struct AnyComponentDenseArray {

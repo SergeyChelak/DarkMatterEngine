@@ -5,8 +5,6 @@
 //  Created by Sergey on 17.11.2025.
 //
 
-import DarkMatterCore
-
 typealias ComponentTypeMap = [ComponentIdentifier: Component.Type]
 
 extension ComponentTypeMap {

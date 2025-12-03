@@ -29,11 +29,7 @@ final class RendererSystem: GameSystem, Renderer {
     init(metalContext: MetalContext) {
         self.metalContext = metalContext
     }
-    
-    var device: MTLDevice {
-        metalContext.device
-    }
-    
+        
     func process(
         /* delta time */
         renderables: [RenderableComponent],
