@@ -15,7 +15,7 @@ public protocol Component: Codable, Sendable {
     var componentId: ComponentIdentifier { get }
 }
 
-extension Component {
+public extension Component {
     static var componentId: ComponentIdentifier {
         ComponentIdentifier(Self.self)
     }

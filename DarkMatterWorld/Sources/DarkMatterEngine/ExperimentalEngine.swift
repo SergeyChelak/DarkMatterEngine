@@ -5,8 +5,8 @@
 //  Created by Sergey on 28.11.2025.
 //
 
-import Foundation
+import DarkMatterCore
 
-public final class ExperimentalEngine {
+public final class ExperimentalEngine: GameEngine {
     //
 }

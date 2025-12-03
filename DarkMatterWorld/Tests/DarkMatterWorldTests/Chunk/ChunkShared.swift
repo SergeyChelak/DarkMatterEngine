@@ -5,6 +5,7 @@
 //  Created by Sergey on 23.11.2025.
 //
 
+import DarkMatterCore
 @testable import DarkMatterWorld
 
 final class ChunkShared {
