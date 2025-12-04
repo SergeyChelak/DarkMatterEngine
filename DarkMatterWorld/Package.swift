@@ -23,6 +23,10 @@ let package = Package(
             name: "DarkMatterEngine",
             targets: ["DarkMatterEngine"]
         ),
+        .library(
+            name: "DarkMatterInput",
+            targets: ["DarkMatterInput"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -33,6 +37,9 @@ let package = Package(
         .target(
             name: "DarkMatterWorld",
             dependencies: ["DarkMatterCore"]
+        ),
+        .target(
+            name: "DarkMatterInput"
         ),
         .target(
             name: "DarkMatterEngine",
